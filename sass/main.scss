@@ -1,0 +1,100 @@
+/* colours */
+$purple: #6f6082;
+
+
+@font-face {
+  font-family: 'MusiSync';
+  src: url('../musisync_font/MusiSync.ttf');
+}
+
+body {
+    margin: 0;
+    background-color: $purple;
+
+    /* default font styling */
+    color: #fff;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+
+}
+
+a {
+    color: #c0c0c0;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #bcb4c8;
+}
+
+.note {
+    font-family: 'MusiSync';
+    font-size: 6rem;
+    vertical-align: middle;
+}
+
+.header {
+    margin: 0 auto;
+    font-size: 3rem;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+.LH, .RH {
+    width: 50%;
+    // height: 100vh;
+    display: inline-block;
+    // position: relative;
+
+    text-align: center;
+    font-size: 3rem;
+
+    .circle {
+        width: 18rem;
+        height: 18rem;
+        background: #fff;
+        border-radius: 50%;
+        margin: 0 auto;
+
+        /* double border */
+        border: 6px solid #fff;
+        box-shadow: inset 0 0 0 12px $purple;
+
+        color: #787878;
+        /* center the text inside the circle */
+        line-height: 18rem;
+        white-space: nowrap;
+
+    }
+
+    .hand {
+        display: block;
+        padding-top: 1rem;
+    }
+
+
+
+}
+
+
+.tempo_box {
+    position: fixed;
+    font-size: 2rem;
+    top: 2rem;
+    right: 2rem;
+
+    .musicnote {
+        font-size: 3rem;
+    }
+}
+
+.page_title {
+    font-size: 1.5rem;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .title {
+        font-size: 3rem;
+    }
+}
