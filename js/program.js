@@ -1,4 +1,4 @@
-// constants: colours
+// constants: button colours
 var miss = "#f24e4e";
 var bad = "#f79696";
 var ok = "#dee7d5";
@@ -19,20 +19,29 @@ var playNote = function(hand) {
 
         // remove previous event listeners
         if (leftAttached) {
-            $(document).off("keydown", leftEventListener.bind(leftEventListener, startTime));
+            $(document).off("keydown.leftNamespace");
+            setColor("LH_btn", unpressed);
+            restoreText("LH_btn_text");
             leftAttached = "false";
         }
 
         playSound("left_hand_audio");
-        console.log("triplet eighth");
-        $(document).on("keydown", leftEventListener.bind(leftEventListener, startTime));
+        console.log("triplet eighth " + new Date().getTime());
+        $(document).on("keydown.leftNamespace", leftEventListener.bind(leftEventListener, startTime));
 
     } else if (hand === "right") {
 
-        playSound("right_hand_audio");
-        console.log("sixteenth");
+        // remove previous event listeners
+        if (rightAttached) {
+            $(document).off("keydown.rightNamespace");
+            setColor("RH_btn", unpressed);
+            restoreText("RH_btn_text");
+            rightAttached = "false";
+        }
 
-        // fill in event listener stuff
+        playSound("right_hand_audio");
+        console.log("sixteenth " + new Date().getTime());
+        $(document).on("keydown.rightNamespace", rightEventListener.bind(rightEventListener, startTime));
 
     }
 
@@ -46,18 +55,43 @@ var leftEventListener = function(startTime) {
         console.log("left was pressed");
         var currentTime = new Date().getTime();
         var timeElapsed = currentTime - startTime;
-        // calculateScore(timeElapsed, hand)
         console.log(timeElapsed);
+        var score = calculateScore(timeElapsed)
+
+        setColor("LH_btn", score);
+        removeText("LH_btn_text");
     }
 };
 
+var rightEventListener = function(startTime) {
+    rightAttached = "true";
 
+    if(event.keyCode == 74) {
+        console.log("right was pressed");
+        var currentTime = new Date().getTime();
+        var timeElapsed = currentTime - startTime;
+        console.log(timeElapsed);
+        var score = calculateScore(timeElapsed)
 
-var calculateScore = function (timeElapsed, hand) {
+        setColor("RH_btn", score);
+        removeText("RH_btn_text");
+    }
+};
+
+var calculateScore = function (timeElapsed) {
     var score;
 
-
-
+    if (timeElapsed < 70) {
+        score = great;
+    } else if (timeElapsed < 140) {
+        score = good;
+    } else if (timeElapsed < 210) {
+        score = ok;
+    } else if (timeElapsed < 280) {
+        score = bad;
+    } else {
+        score = miss;
+    }
 
     return score;
 };
@@ -81,7 +115,6 @@ var restoreText = function (btn) {
     var property = document.getElementById(btn);
     property.style.display = "inline";
 };
-
-// left should be 555.55556
-var leftTimer = setInterval(function() { playNote("left") }, 2000);
-// var rightTimer = setInterval(function() { playNote("right") }, 416.666667);
+ 
+var leftTimer = setInterval(function() { playNote("left") }, 555.55556);
+var rightTimer = setInterval(function() { playNote("right") }, 416.666667);
