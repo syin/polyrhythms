@@ -14,7 +14,6 @@ body {
     /* default font styling */
     color: #fff;
     font-family: 'Lato', Helvetica, Arial, sans-serif;
-
 }
 
 a {
@@ -48,18 +47,19 @@ a:hover {
     text-align: center;
     font-size: 3rem;
 
+    .circle-container {
+        width: 300px;
+        height: 300px;
+    }
+
     .circle {
-        width: 18rem;
-        height: 18rem;
+        color: #787878;
+        width: 300px;
+        height: 300px;
         background: #fff;
         border-radius: 50%;
         margin: 0 auto;
-
-        /* double border */
-        border: 6px solid #fff;
-        box-shadow: inset 0 0 0 12px $purple;
-
-        color: #787878;
+        box-shadow: inset 0 0 0 18px $purple;
         /* center the text inside the circle */
         line-height: 18rem;
         white-space: nowrap;
@@ -75,6 +75,9 @@ a:hover {
 
 }
 
+// .LH .circle:before {
+//     content: 'press f';
+// }
 
 .tempo_box {
     position: fixed;

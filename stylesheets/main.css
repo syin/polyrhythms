@@ -12,25 +12,25 @@ body {
   font-family: 'Lato', Helvetica, Arial, sans-serif;
 }
 
-/* line 20, ../sass/main.scss */
+/* line 19, ../sass/main.scss */
 a {
   color: #c0c0c0;
   text-decoration: none;
 }
 
-/* line 25, ../sass/main.scss */
+/* line 24, ../sass/main.scss */
 a:hover {
   color: #bcb4c8;
 }
 
-/* line 29, ../sass/main.scss */
+/* line 28, ../sass/main.scss */
 .note {
   font-family: 'MusiSync';
   font-size: 6rem;
   vertical-align: middle;
 }
 
-/* line 35, ../sass/main.scss */
+/* line 34, ../sass/main.scss */
 .header {
   margin: 0 auto;
   font-size: 3rem;
@@ -38,24 +38,27 @@ a:hover {
   padding-bottom: 2rem;
 }
 
-/* line 42, ../sass/main.scss */
+/* line 41, ../sass/main.scss */
 .LH, .RH {
   width: 50%;
   display: inline-block;
   text-align: center;
   font-size: 3rem;
 }
-/* line 51, ../sass/main.scss */
+/* line 50, ../sass/main.scss */
+.LH .circle-container, .RH .circle-container {
+  width: 300px;
+  height: 300px;
+}
+/* line 55, ../sass/main.scss */
 .LH .circle, .RH .circle {
-  width: 18rem;
-  height: 18rem;
+  color: #787878;
+  width: 300px;
+  height: 300px;
   background: #fff;
   border-radius: 50%;
   margin: 0 auto;
-  /* double border */
-  border: 6px solid #fff;
-  box-shadow: inset 0 0 0 12px #6f6082;
-  color: #787878;
+  box-shadow: inset 0 0 0 18px #6f6082;
   /* center the text inside the circle */
   line-height: 18rem;
   white-space: nowrap;
@@ -66,19 +69,19 @@ a:hover {
   padding-top: 1rem;
 }
 
-/* line 79, ../sass/main.scss */
+/* line 82, ../sass/main.scss */
 .tempo_box {
   position: fixed;
   font-size: 2rem;
   top: 2rem;
   right: 2rem;
 }
-/* line 85, ../sass/main.scss */
+/* line 88, ../sass/main.scss */
 .tempo_box .musicnote {
   font-size: 3rem;
 }
 
-/* line 90, ../sass/main.scss */
+/* line 93, ../sass/main.scss */
 .page_title {
   font-size: 1.5rem;
   position: fixed;
@@ -86,7 +89,7 @@ a:hover {
   left: 50%;
   transform: translateX(-50%);
 }
-/* line 97, ../sass/main.scss */
+/* line 100, ../sass/main.scss */
 .page_title .title {
   font-size: 3rem;
 }
