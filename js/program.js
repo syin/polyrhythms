@@ -11,32 +11,6 @@ var unpressed = "#ffffff";
 var leftAttached = "false";
 var rightAttached = "false";
 
-// progressbar.js from http://progressbarjs.readthedocs.io/en/latest/
-var circleOutline = new ProgressBar.Circle(LH_btn, {
-    strokeWidth: 2,
-    easing: 'linear',
-    duration: 555.55556,
-    color: '#ffffff',
-    trailColor: '#eee',
-    trailWidth: 0.5,
-    svgStyle: null,
-    text: {
-        value: 'press f',  
-        style: {
-            color: '#787878',
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            padding: 0,
-            margin: 0,
-            transform: {
-                prefix: true,
-                value: 'translate(-50%, -50%)'
-            }
-        },
-    }
-});
-
 var playNote = function(hand) {
     var startTime = new Date().getTime();
     
@@ -46,13 +20,11 @@ var playNote = function(hand) {
         if (leftAttached) {
             $(document).off("keydown.leftNamespace");
             setColor("LH_btn", unpressed);
-            // restoreText("LH_btn_text");
+            restoreText("LH_btn_text");
             leftAttached = "false";
         }
 
-        circleOutline.animate(1.0, function() {
-            console.log('Animation has finished');
-        });
+        flashCircle("LH_btn");
         playSound("left_hand_audio");
         console.log("triplet eighth " + new Date().getTime());
         $(document).on("keydown.leftNamespace", leftEventListener.bind(leftEventListener, startTime));
@@ -63,11 +35,13 @@ var playNote = function(hand) {
         if (rightAttached) {
             $(document).off("keydown.rightNamespace");
             setColor("RH_btn", unpressed);
-            // restoreText("RH_btn_text");
+            restoreText("RH_btn_text");
             rightAttached = "false";
         }
 
         playSound("right_hand_audio");
+
+        flashCircle("RH_btn");
         console.log("sixteenth " + new Date().getTime());
         $(document).on("keydown.rightNamespace", rightEventListener.bind(rightEventListener, startTime));
 
@@ -87,7 +61,7 @@ var leftEventListener = function(startTime) {
         var score = calculateScore(timeElapsed)
 
         setColor("LH_btn", score);
-        // removeText("LH_btn_text");
+        removeText("LH_btn_text");
     }
 };
 
@@ -95,14 +69,13 @@ var rightEventListener = function(startTime) {
     rightAttached = "true";
 
     if(event.keyCode == 74) {
-        console.log("right was pressed");
+        console.log("right was pressed " + timeElapsed);
         var currentTime = new Date().getTime();
         var timeElapsed = currentTime - startTime;
-        console.log(timeElapsed);
         var score = calculateScore(timeElapsed)
 
         setColor("RH_btn", score);
-        // removeText("RH_btn_text");
+        removeText("RH_btn_text");
     }
 };
 
@@ -124,9 +97,20 @@ var calculateScore = function (timeElapsed) {
     return score;
 };
 
-var playSound = function (sound_type) {
-    var sound = document.getElementById(sound_type);
+var playSound = function (soundType) {
+    var sound = document.getElementById(soundType);
     sound.play()
+};
+
+var flashCircle = function (circleID) {
+    var property = document.getElementById(circleID);
+    property.style.border = '4px solid #fff';
+    setTimeout(function(){unflashCircle(circleID)}, 100);
+};
+
+var unflashCircle = function (circleID) {
+    var property = document.getElementById(circleID);
+    property.style.border = '4px solid #787878';
 };
 
 var setColor = function (btn, color) {
@@ -145,4 +129,4 @@ var restoreText = function (btn) {
 };
  
 var leftTimer = setInterval(function() { playNote("left") }, 555.55556);
-// var rightTimer = setInterval(function() { playNote("right") }, 416.666667);
+var rightTimer = setInterval(function() { playNote("right") }, 416.666667);
