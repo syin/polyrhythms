@@ -10,6 +10,8 @@ var unpressed = "#ffffff";
 // state of left/right buttons, whether or not an event listener is attached
 var leftAttached = "false";
 var rightAttached = "false";
+var tempoLeft = 500;
+var tempoRight = 375;
 
 var playNote = function(hand) {
     var startTime = new Date().getTime();
@@ -26,7 +28,9 @@ var playNote = function(hand) {
 
         flashCircle("LH_btn");
         playSound("left_hand_audio");
-        $(document).on("keydown.leftNamespace", leftEventListener.bind(leftEventListener, startTime));
+
+        // console.log("triplet eighth " + new Date().getTime());
+        $(document).on("keydown.leftNamespace", function (e) { leftEventListener(e, startTime); });
 
     } else if (hand === "right") {
 
@@ -41,17 +45,20 @@ var playNote = function(hand) {
         playSound("right_hand_audio");
 
         flashCircle("RH_btn");
-        $(document).on("keydown.rightNamespace", rightEventListener.bind(rightEventListener, startTime));
+
+        // console.log("sixteenth " + new Date().getTime());
+        $(document).on("keydown.rightNamespace", function (e) { rightEventListener(e, startTime); });
 
     }
 
 
 }
 
-var leftEventListener = function(startTime) {
+var leftEventListener = function(e, startTime) {
     leftAttached = "true";
 
-    if(event.keyCode == 70) {
+    if(e.keyCode == 70) {
+        // console.log("left was pressed " + timeElapsed);
         var currentTime = new Date().getTime();
         var timeElapsed = currentTime - startTime;
         var score = calculateScore(timeElapsed)
@@ -61,10 +68,11 @@ var leftEventListener = function(startTime) {
     }
 };
 
-var rightEventListener = function(startTime) {
+var rightEventListener = function(e, startTime) {
     rightAttached = "true";
 
-    if(event.keyCode == 74) {
+    if(e.keyCode == 74) {
+        // console.log("right was pressed " + timeElapsed);
         var currentTime = new Date().getTime();
         var timeElapsed = currentTime - startTime;
         var score = calculateScore(timeElapsed)
@@ -122,6 +130,40 @@ var restoreText = function (btn) {
     var property = document.getElementById(btn);
     property.style.display = "inline";
 };
- 
-var leftTimer = setInterval(function() { playNote("left") }, 555.55556);
-var rightTimer = setInterval(function() { playNote("right") }, 416.666667);
+
+var changeTempo = function (input) {
+
+    if (input.value < 24) input.value = 24;
+    if (input.value > 208) input.value = 208;
+
+    tempoLeft = 1000 / ((input.value / 60) * 3); // triplet eighths
+    tempoRight = 1000 / ((input.value / 60) * 4); // sixteenths
+
+    if (leftTimer) clearInterval(leftTimer);
+    leftTimer = setInterval(function() { playNote("left") }, tempoLeft);
+
+    if (rightTimer) clearInterval(rightTimer);
+    rightTimer = setInterval(function() { playNote("right") }, tempoRight);
+
+};
+
+function is_touch_device() {
+    // http://stackoverflow.com/a/4819886
+    return 'ontouchstart' in window        // works on most browsers 
+        || navigator.maxTouchPoints;       // works on IE10/11 and Surface
+};
+
+var detectMobile = function () {
+    if (is_touch_device()) {
+        document.getElementById("mobile-note").style.display = 'block';
+
+        close = document.getElementById("close");
+        close.addEventListener('click', function() {
+            document.getElementById("mobile-note").style.display = 'none';
+        }, false);
+    }
+};
+
+detectMobile();
+var leftTimer = setInterval(function() { playNote("left") }, tempoLeft);
+var rightTimer = setInterval(function() { playNote("right") }, tempoRight);
