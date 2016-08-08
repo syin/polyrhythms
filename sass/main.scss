@@ -10,11 +10,9 @@ $purple: #6f6082;
 body {
     margin: 0;
     background-color: $purple;
-
     /* default font styling */
     color: #fff;
     font-family: 'Lato', Helvetica, Arial, sans-serif;
-
 }
 
 a {
@@ -71,21 +69,40 @@ a:hover {
         padding-top: 1rem;
     }
 
-
-
 }
-
 
 .tempo_box {
     position: fixed;
-    font-size: 2rem;
     top: 2rem;
     right: 2rem;
 
+    font-size: 2rem;
+    color: #fff;
+    vertical-align: middle;
+
     .musicnote {
+        content: 'q';
+        font-family: 'MusiSync';
         font-size: 3rem;
     }
+
+    .tempo {
+        border-radius: 4px;
+        border: none;
+        padding: 0 1rem 0.5rem 1rem;
+        background: none;
+        vertical-align: middle;
+        color: #fff;
+        font-size: 2rem;
+        width: 5rem;
+        padding: 0.5rem; 
+    }
+    .tempo:hover {
+        background-color: #9588a7;
+    }
+
 }
+
 
 .page_title {
     font-size: 1.5rem;
@@ -97,4 +114,71 @@ a:hover {
     .title {
         font-size: 3rem;
     }
+}
+
+#mobile-note {
+    // https://css-tricks.com/pop-from-top-notification/
+    display: none;
+
+    z-index: 101;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+    color: #333;
+    text-align: center;
+    line-height: 2.5;
+    overflow: hidden; 
+    -webkit-box-shadow: 0 0 5px black;
+    -moz-box-shadow:    0 0 5px black;
+    box-shadow:         0 0 5px black;
+
+    a {
+        cursor: pointer;
+        color: #8f75af;
+    }
+}
+
+@media (max-width: 800px) {
+    .header {
+        font-size: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .note {
+    font-size: 4rem;
+    }
+
+    .LH, .RH {
+        font-size: 2rem;
+        .circle {
+            width: 14rem;
+            height: 14rem;
+            line-height: 14rem;
+        }
+    }
+
+    .tempo_box {
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        .musicnote {
+            font-size: 2rem;
+        }
+        .tempo {
+            padding: 0 0.5rem 0.25rem 0.5rem;
+            font-size: 1.5rem;
+            width: 3rem;
+            padding: 0.5rem; 
+        }
+    }
+
+    .page_title {
+        font-size: 1rem;
+        .title {
+            font-size: 2rem;
+        }
+    }
+
 }

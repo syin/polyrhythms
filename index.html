@@ -8,16 +8,21 @@
 </head>
 <body>
 
-<audio id="left_hand_audio" src="http://www.soundjay.com/button/button-24.wav" autostart="false" ></audio>
-<audio id="right_hand_audio" src="http://www.soundjay.com/button/button-16.wav" autostart="false" ></audio>
+<audio id="left_hand_audio" src="button-24.wav" autostart="false" ></audio>
+<audio id="right_hand_audio" src="button-16.wav" autostart="false" ></audio>
 
+<div id="mobile-note">
+    Note: This site is best viewed on desktop. <a id="close">Dismiss</a>
+</div>
 
 <div class="header">
     <div>RH <span class="note">y</span></div>
     <div>LH <span class="note">T</span></div>
 </div>
+
 <div class="tempo_box">
-    <span class="musicnote">&#9833;</span> = <span class="tempo">100</span>
+    <span class="musicnote">q</span> =
+    <input id="tempo" class="tempo" type="number" value="40" onchange="changeTempo(this);">   
 </div>
 
 <div class="LH">
@@ -36,7 +41,6 @@
 <div class="page_title"><span class="title">polyrhythms</span> by <a href="http://shirleyy.in">shirley yin</a></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="js/progressbar.min.js"></script>   
-<script src="js/program.js"></script>
+<script src="js/rhythm.min.js"></script>
 </body>
 </html>
