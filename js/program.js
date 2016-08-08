@@ -26,7 +26,6 @@ var playNote = function(hand) {
 
         flashCircle("LH_btn");
         playSound("left_hand_audio");
-        console.log("triplet eighth " + new Date().getTime());
         $(document).on("keydown.leftNamespace", leftEventListener.bind(leftEventListener, startTime));
 
     } else if (hand === "right") {
@@ -42,7 +41,6 @@ var playNote = function(hand) {
         playSound("right_hand_audio");
 
         flashCircle("RH_btn");
-        console.log("sixteenth " + new Date().getTime());
         $(document).on("keydown.rightNamespace", rightEventListener.bind(rightEventListener, startTime));
 
     }
@@ -54,10 +52,8 @@ var leftEventListener = function(startTime) {
     leftAttached = "true";
 
     if(event.keyCode == 70) {
-        console.log("left was pressed");
         var currentTime = new Date().getTime();
         var timeElapsed = currentTime - startTime;
-        console.log(timeElapsed);
         var score = calculateScore(timeElapsed)
 
         setColor("LH_btn", score);
@@ -69,7 +65,6 @@ var rightEventListener = function(startTime) {
     rightAttached = "true";
 
     if(event.keyCode == 74) {
-        console.log("right was pressed " + timeElapsed);
         var currentTime = new Date().getTime();
         var timeElapsed = currentTime - startTime;
         var score = calculateScore(timeElapsed)
