@@ -8,13 +8,13 @@ var unpressed = "#ffffff";
 
 // global variables
 // state of left/right buttons, whether or not an event listener is attached
+var globalStart;
 var leftAttached = "false";
 var rightAttached = "false";
 var tempoLeft = 500;
 var tempoRight = 375;
 
-var playNote = function(hand) {
-    var startTime = new Date().getTime();
+var playNote = function(hand, first) {
     
     if (hand === "left") {
 
@@ -30,7 +30,7 @@ var playNote = function(hand) {
         playSound("left_hand_audio");
 
         // console.log("triplet eighth " + new Date().getTime());
-        $(document).on("keydown.leftNamespace", function (e) { leftEventListener(e, startTime); });
+        $(document).on("keydown.leftNamespace", function (e) { leftEventListener(e); });
 
     } else if (hand === "right") {
 
@@ -42,47 +42,51 @@ var playNote = function(hand) {
             rightAttached = "false";
         }
 
-        playSound("right_hand_audio");
-
         flashCircle("RH_btn");
+        playSound("right_hand_audio");
+        console.log("right note", new Date().getTime());
 
         // console.log("sixteenth " + new Date().getTime());
-        $(document).on("keydown.rightNamespace", function (e) { rightEventListener(e, startTime); });
+        $(document).on("keydown.rightNamespace", function (e) { rightEventListener(e); });
 
     }
 
+    if (first) {
+        var leftTimer = setInterval(function() { playNote("left") }, tempoLeft);
+        var rightTimer = setInterval(function() { playNote("right") }, tempoRight);
+    }
 
 }
 
-var leftEventListener = function(e, startTime) {
+var leftEventListener = function(e) {
     leftAttached = "true";
 
     if(e.keyCode == 70) {
         // console.log("left was pressed " + timeElapsed);
         var currentTime = new Date().getTime();
-        var timeElapsed = currentTime - startTime;
-        var score = calculateScore(timeElapsed)
+        var timeElapsed = Math.abs(((currentTime - globalStart) % tempoLeft) - tempoLeft);
+        var score = calculateScore(timeElapsed, tempoLeft);
 
         setColor("LH_btn", score);
         removeText("LH_btn_text");
     }
 };
 
-var rightEventListener = function(e, startTime) {
+var rightEventListener = function(e) {
     rightAttached = "true";
 
     if(e.keyCode == 74) {
         // console.log("right was pressed " + timeElapsed);
         var currentTime = new Date().getTime();
-        var timeElapsed = currentTime - startTime;
-        var score = calculateScore(timeElapsed)
+        var timeElapsed = Math.abs(((currentTime - globalStart) % tempoRight) - tempoRight);
+        var score = calculateScore(timeElapsed, tempoRight);
 
         setColor("RH_btn", score);
         removeText("RH_btn_text");
     }
 };
 
-var calculateScore = function (timeElapsed) {
+var calculateScore = function (timeElapsed, tempo) {
     var score;
 
     if (timeElapsed < 70) {
@@ -165,5 +169,6 @@ var detectMobile = function () {
 };
 
 detectMobile();
-var leftTimer = setInterval(function() { playNote("left") }, tempoLeft);
-var rightTimer = setInterval(function() { playNote("right") }, tempoRight);
+globalStart = new Date().getTime();
+var firstLeftTime = setTimeout(function() { playNote("left", true) }, tempoLeft/2);
+var firstRightTime = setTimeout(function() { playNote("right", true) }, tempoRight/2);
