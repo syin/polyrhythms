@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:stable
+    ports:
+      - 8003:80
+    volumes:
+      - ./:/var/www/polyrhythms
+      - ./nginx/conf.d:/etc/nginx/conf.d
