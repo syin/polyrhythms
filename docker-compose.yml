@@ -8,3 +8,18 @@ services:
     volumes:
       - ./:/var/www/polyrhythms
       - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - default
+      - nginx-proxy_nginx-proxy
+    restart: always
+    environment:
+      - VIRTUAL_PORT=8003
+      - VIRTUAL_HOST=polyrhythms.shirleyyin.com
+      - LETSENCRYPT_HOST=polyrhythms.shirleyyin.com
+      - LETSENCRYPT_EMAIL=contact@shirleyyin.com
+
+networks:
+  default:
+    driver: bridge
+  nginx-proxy_nginx-proxy:
+    external: true
