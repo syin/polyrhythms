@@ -5,6 +5,8 @@ services:
     image: nginx:stable
     ports:
       - 8003:80
+    expose:
+      - "8003"
     volumes:
       - ./:/var/www/polyrhythms
       - ./nginx/conf.d:/etc/nginx/conf.d
